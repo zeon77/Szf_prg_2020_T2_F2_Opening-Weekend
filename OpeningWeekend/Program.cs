@@ -54,14 +54,14 @@ namespace OpeningWeekend
 
             //7. feladat
             Console.WriteLine("7. feladat: -> stat.csv");
-            var filmekSzámaForgalmazónkánt = filmek.GroupBy(film => film.Forgalmazó).Select(group => new { Forgalmazó = group.Key, FilmekSzáma = group.Count() });
-
             StreamWriter sw = new StreamWriter(@"stat.csv");
             sw.WriteLine("forgalmazo;filmekSzama");
-            foreach (var item in filmekSzámaForgalmazónkánt)
-            {
-                sw.WriteLine($"{item.Forgalmazó};{item.FilmekSzáma}");
-            }
+
+            filmek.GroupBy(film => film.Forgalmazó)
+                .Select(group => new { Forgalmazó = group.Key, FilmekSzáma = group.Count() })
+                .ToList()
+                .ForEach(x => sw.WriteLine($"{x.Forgalmazó};{x.FilmekSzáma}"));
+
             sw.Close();
 
             //8. feladat
