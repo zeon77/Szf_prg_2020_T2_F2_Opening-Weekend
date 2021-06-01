@@ -73,6 +73,15 @@ namespace OpeningWeekend
 
             Console.WriteLine($"8. feladat: A leghosszabb időszak két InterCom-os bemutató között: {maxDiff} nap");
 
+            //8. feladat (v2)
+            filmekInterCom = filmek.Where(f => f.Forgalmazó == "InterCom").OrderBy(f => f.BemutatóDátum).ToList();
+            maxDiff = filmekInterCom
+                .Take(filmekInterCom.Count - 1)
+                .Zip(filmekInterCom.Skip(1), (first, second) => (second.BemutatóDátum - first.BemutatóDátum).Days)
+                .Max();
+
+            Console.WriteLine($"8. feladat (v2): A leghosszabb időszak két InterCom-os bemutató között: {maxDiff} nap");
+
             Console.ReadKey();
         }
     }
